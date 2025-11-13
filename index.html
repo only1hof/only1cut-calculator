@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONLY1CUT Competition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="mainPage">
+            <h1>ONLY1CUT Competition</h1>
+            
+            <div class="competitor">
+                <h2>Competitor 1</h2>
+                <input type="text" id="name1" placeholder="Enter name">
+                <div class="weight-inputs">
+                    <input type="number" id="side1a" step="0.1" placeholder="Side A (g)">
+                    <input type="number" id="side1b" step="0.1" placeholder="Side B (g)">
+                </div>
+            </div>
+            
+            <div class="competitor">
+                <h2>Competitor 2</h2>
+                <input type="text" id="name2" placeholder="Enter name">
+                <div class="weight-inputs">
+                    <input type="number" id="side2a" step="0.1" placeholder="Side A (g)">
+                    <input type="number" id="side2b" step="0.1" placeholder="Side B (g)">
+                </div>
+            </div>
+            
+            <button onclick="calculateWinner()">Calculate Winner</button>
+        </div>
+        
+        <div class="results" id="results">
+            <h1>ONLY1CUT Competition</h1>
+            
+            <div class="result-item">
+                <h3 id="result1name"></h3>
+                <div class="percentage" id="result1diff"></div>
+                <p id="result1details"></p>
+            </div>
+            
+            <div class="result-item">
+                <h3 id="result2name"></h3>
+                <div class="percentage" id="result2diff"></div>
+                <p id="result2details"></p>
+            </div>
+            
+            <div class="winner" id="winner"></div>
+            
+            <button class="back-btn" onclick="goBack()">New Competition</button>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
