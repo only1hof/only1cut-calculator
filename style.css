@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Circular+Std:wght@400;500;700&family=Montserrat:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(90deg, #3b82f6 0%, #3b82f6 50%, #ef4444 50%, #ef4444 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 20px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+h1 {
+    text-align: center;
+    color: #000;
+    margin-bottom: 15px;
+    font-size: 1.8em;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.competitor {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e0e7ff;
+}
+
+.competitor:last-of-type {
+    border-bottom: none;
+}
+
+h2 {
+    color: #000;
+    margin-bottom: 8px;
+    font-size: 1em;
+    font-weight: 600;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #e0e7ff;
+    border-radius: 10px;
+    font-size: 1em;
+    margin-bottom: 6px;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+input:focus {
+    outline: none;
+    border-color: #20d4ae;
+    box-shadow: 0 0 0 3px rgba(32, 212, 174, 0.1);
+}
+
+input[type="text"] {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    color: #000;
+}
+
+input[type="number"] {
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #000;
+}
+
+.weight-inputs {
+    display: flex;
+    gap: 10px;
+}
+
+.weight-inputs input {
+    flex: 1;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background: #20d4ae;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(32, 212, 174, 0.4);
+}
+
+button:hover {
+    background: #1ab89a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(32, 212, 174, 0.6);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.results {
+    margin-top: 15px;
+    display: none;
+}
+
+.results.show {
+    display: block;
+}
+
+.result-item {
+    background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+    border: 2px solid #c7d2fe;
+}
+
+.result-item h3 {
+    color: #000;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.percentage {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2em;
+    font-weight: 700;
+    color: #000;
+    letter-spacing: 1px;
+}
+
+.result-item p {
+    font-family: 'Montserrat', sans-serif;
+    color: #000;
+    font-weight: 500;
+    margin-top: 5px;
+}
+
+.result-item p .digit {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+}
+
+.winner {
+    background: #20d4ae;
+    color: white;
+    padding: 14px;
+    border-radius: 12px;
+    text-align: center;
+    margin-top: 12px;
+    font-size: 1.3em;
+    font-weight: 700;
+    box-shadow: 0 8px 25px rgba(32, 212, 174, 0.5);
+}
+
+.back-btn {
+    background: #6b7280;
+    margin-top: 10px;
+    box-shadow: 0 4px 15px rgba(107, 114, 128, 0.4);
+}
+
+.back-btn:hover {
+    background: #4b5563;
+    box-shadow: 0 6px 20px rgba(107, 114, 128, 0.6);
+}
