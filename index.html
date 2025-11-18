@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ONLY1CUT Competition</title>
+    <title>ONLY1CUT</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
+        <!-- Main Competition Page -->
         <div id="mainPage">
-            <h1>ONLY1CUT Competition</h1>
+            <h1>ONLY1CUT</h1>
             
             <div class="competitor">
-                <h2>Competitor 1</h2>
+                <h2>Player 1</h2>
                 <input type="text" id="name1" placeholder="Enter name">
                 <div class="weight-inputs">
                     <input type="number" id="side1a" step="0.1" placeholder="Side A (g)">
@@ -21,7 +22,7 @@
             </div>
             
             <div class="competitor">
-                <h2>Competitor 2</h2>
+                <h2>Player 2</h2>
                 <input type="text" id="name2" placeholder="Enter name">
                 <div class="weight-inputs">
                     <input type="number" id="side2a" step="0.1" placeholder="Side A (g)">
@@ -29,11 +30,15 @@
                 </div>
             </div>
             
-            <button onclick="calculateWinner()">Calculate Winner</button>
+            <div class="button-group">
+                <button onclick="calculateWinner()">Calculate</button>
+                <button class="secondary-btn" onclick="showLeaderboard()">Leaderboard</button>
+            </div>
         </div>
         
+        <!-- Results Page -->
         <div class="results" id="results">
-            <h1>ONLY1CUT Competition</h1>
+            <h1>Match Results</h1>
             
             <div class="result-item">
                 <h3 id="result1name"></h3>
@@ -49,7 +54,24 @@
             
             <div class="winner" id="winner"></div>
             
-            <button class="back-btn" onclick="goBack()">New Competition</button>
+            <div class="button-group">
+                <button onclick="nextMatch()">New Competition</button>
+                <button class="secondary-btn" onclick="showLeaderboard()">Leaderboard</button>
+            </div>
+        </div>
+        
+        <!-- Leaderboard Page -->
+        <div class="leaderboard-page" id="leaderboardPage">
+            <h1>Leaderboard</h1>
+            
+            <div class="leaderboard-container" id="leaderboardContainer">
+                <div class="no-data">No matches recorded yet</div>
+            </div>
+            
+            <div class="button-group">
+                <button onclick="backToCompetition()">Back to Competition</button>
+                <button class="danger-btn" onclick="resetLeaderboard()">Reset Leaderboard</button>
+            </div>
         </div>
     </div>
     
