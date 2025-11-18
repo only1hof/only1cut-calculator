@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Circular+Std:wght@400;500;700&family=Montserrat:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Montserrat:wght@400;500;600;700;800&display=swap');
 
 * {
     margin: 0;
@@ -17,12 +17,16 @@ body {
 }
 
 .container {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(10px);
     border-radius: 20px;
-    padding: 20px;
-    max-width: 500px;
+    padding: 20px 35px;
+    max-width: 95vw;
     width: 100%;
+    min-height: 90vh;
+    max-height: 95vh;
+    display: flex;
+    flex-direction: column;
     box-shadow: 0 20px 60px rgba(0,0,0,0.3);
 }
 
@@ -30,8 +34,8 @@ h1 {
     text-align: center;
     color: #000;
     margin-bottom: 15px;
-    font-size: 1.8em;
-    font-weight: 700;
+    font-size: 3.5vw;
+    font-weight: 800;
     letter-spacing: 1px;
 }
 
@@ -48,17 +52,17 @@ h1 {
 h2 {
     color: #000;
     margin-bottom: 8px;
-    font-size: 1em;
-    font-weight: 600;
+    font-size: 2vw;
+    font-weight: 700;
 }
 
 input {
     width: 100%;
-    padding: 8px;
+    padding: 1.2vh;
     border: 2px solid #e0e7ff;
     border-radius: 10px;
-    font-size: 1em;
-    margin-bottom: 6px;
+    font-size: 4vw;
+    margin-bottom: 8px;
     transition: all 0.3s ease;
     background: white;
 }
@@ -66,7 +70,7 @@ input {
 input:focus {
     outline: none;
     border-color: #20d4ae;
-    box-shadow: 0 0 0 3px rgba(32, 212, 174, 0.1);
+    box-shadow: 0 0 0 4px rgba(32, 212, 174, 0.1);
 }
 
 input[type="text"] {
@@ -91,17 +95,22 @@ input[type="number"] {
     flex: 1;
 }
 
+.button-group {
+    display: flex;
+    gap: 12px;
+    margin-top: auto;
+}
+
 button {
-    width: 100%;
-    padding: 10px;
+    flex: 1;
+    padding: 1.8vh;
     background: #20d4ae;
     color: white;
     border: none;
     border-radius: 10px;
-    font-size: 1em;
-    font-weight: 600;
+    font-size: 2vw;
+    font-weight: 700;
     cursor: pointer;
-    margin-top: 6px;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(32, 212, 174, 0.4);
 }
@@ -116,34 +125,56 @@ button:active {
     transform: translateY(0);
 }
 
+.secondary-btn {
+    background: #6b7280;
+    box-shadow: 0 4px 15px rgba(107, 114, 128, 0.4);
+}
+
+.secondary-btn:hover {
+    background: #4b5563;
+    box-shadow: 0 6px 20px rgba(107, 114, 128, 0.6);
+}
+
+.danger-btn {
+    background: #ef4444;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+}
+
+.danger-btn:hover {
+    background: #dc2626;
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.6);
+}
+
 .results {
-    margin-top: 15px;
     display: none;
+    flex-direction: column;
+    height: 100%;
 }
 
 .results.show {
-    display: block;
+    display: flex;
 }
 
 .result-item {
     background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
-    padding: 12px;
+    padding: 1.5vh;
     border-radius: 12px;
-    margin-bottom: 8px;
+    margin-bottom: 1vh;
     border: 2px solid #c7d2fe;
 }
 
 .result-item h3 {
     color: #000;
-    margin-bottom: 6px;
-    font-weight: 600;
+    margin-bottom: 0.5vh;
+    font-weight: 700;
     font-family: 'Montserrat', sans-serif;
+    font-size: 2.2vw;
 }
 
 .percentage {
     font-family: 'Montserrat', sans-serif;
-    font-size: 2em;
-    font-weight: 700;
+    font-size: 4vw;
+    font-weight: 800;
     color: #000;
     letter-spacing: 1px;
 }
@@ -152,33 +183,206 @@ button:active {
     font-family: 'Montserrat', sans-serif;
     color: #000;
     font-weight: 500;
-    margin-top: 5px;
+    margin-top: 0.8vh;
+    font-size: 1.6vw;
 }
 
 .result-item p .digit {
     font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .winner {
     background: #20d4ae;
     color: white;
-    padding: 14px;
+    padding: 2vh;
     border-radius: 12px;
     text-align: center;
-    margin-top: 12px;
-    font-size: 1.3em;
-    font-weight: 700;
+    margin-top: auto;
+    margin-bottom: 1.5vh;
+    font-size: 3vw;
+    font-weight: 800;
     box-shadow: 0 8px 25px rgba(32, 212, 174, 0.5);
 }
 
-.back-btn {
-    background: #6b7280;
-    margin-top: 10px;
-    box-shadow: 0 4px 15px rgba(107, 114, 128, 0.4);
+/* Leaderboard Styles */
+.leaderboard-page {
+    display: none;
+    flex-direction: column;
+    height: 100%;
 }
 
-.back-btn:hover {
-    background: #4b5563;
-    box-shadow: 0 6px 20px rgba(107, 114, 128, 0.6);
+.leaderboard-page.show {
+    display: flex;
+}
+
+.leaderboard-container {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 1vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.no-data {
+    text-align: center;
+    padding: 4vh 20px;
+    color: #6b7280;
+    font-size: 2vw;
+    font-weight: 500;
+    margin: auto;
+}
+
+.leaderboard-item {
+    background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
+    padding: 1.2vh 1.5vw;
+    border-radius: 10px;
+    margin-bottom: 0.8vh;
+    border: 2px solid #c7d2fe;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.leaderboard-rank {
+    font-size: 2.5vw;
+    font-weight: 800;
+    color: #000;
+    min-width: 5vw;
+}
+
+.leaderboard-info {
+    flex: 1;
+    margin: 0 1.5vw;
+}
+
+.leaderboard-name {
+    font-size: 2vw;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 0.3vh;
+    line-height: 1.2;
+}
+
+.leaderboard-stats {
+    font-size: 1.3vw;
+    color: #000;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.leaderboard-record {
+    text-align: right;
+    min-width: 6vw;
+}
+
+.leaderboard-wins {
+    font-size: 2.2vw;
+    font-weight: 800;
+    color: #20d4ae;
+    line-height: 1.2;
+}
+
+.leaderboard-losses {
+    font-size: 1.3vw;
+    color: #6b7280;
+    margin-top: 0.2vh;
+    line-height: 1.2;
+}
+
+.top-3 {
+    position: relative;
+}
+
+.top-3.rank-1 {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    border-color: #ffd700;
+}
+
+.top-3.rank-2 {
+    background: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 100%);
+    border-color: #c0c0c0;
+}
+
+.top-3.rank-3 {
+    background: linear-gradient(135deg, #cd7f32 0%, #e9a66d 100%);
+    border-color: #cd7f32;
+}
+
+.medal {
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    font-size: 2.5vw;
+}
+
+/* Scrollbar Styles */
+.leaderboard-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+.leaderboard-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.leaderboard-container::-webkit-scrollbar-thumb {
+    background: #20d4ae;
+    border-radius: 10px;
+}
+
+.leaderboard-container::-webkit-scrollbar-thumb:hover {
+    background: #1ab89a;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 25px;
+    }
+    
+    h1 {
+        font-size: 2em;
+    }
+    
+    h2 {
+        font-size: 1.3em;
+    }
+    
+    input {
+        padding: 12px;
+        font-size: 1.1em;
+    }
+    
+    button {
+        padding: 15px;
+        font-size: 1.1em;
+    }
+    
+    .percentage {
+        font-size: 2em;
+    }
+    
+    .winner {
+        font-size: 1.5em;
+        padding: 20px;
+    }
+    
+    .leaderboard-rank {
+        font-size: 1.8em;
+        min-width: 60px;
+    }
+    
+    .leaderboard-name {
+        font-size: 1.3em;
+    }
+    
+    .leaderboard-stats {
+        font-size: 1em;
+    }
+    
+    .leaderboard-wins {
+        font-size: 1.5em;
+    }
 }
