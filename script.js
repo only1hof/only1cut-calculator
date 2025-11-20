@@ -1,21 +1,89 @@
 // Leaderboard data stored in localStorage
 let leaderboard = JSON.parse(localStorage.getItem('only1cut_leaderboard')) || {};
 
+// Emoji celebration function
+function createEmojiCelebration(winner) {
+    const emojis = ['🎉', '🎊', '✨', '🌟', '💫', '⭐', '🏆', '👏', '🎈', '🔥'];
+    const colors = ['#FFD700', '#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8'];
+    
+    // Create 30 emojis
+    for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+            const emoji = document.createElement('div');
+            emoji.className = 'emoji-celebration';
+            emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            emoji.style.left = Math.random() * 100 + '%';
+            emoji.style.top = '100%';
+            document.body.appendChild(emoji);
+            
+            setTimeout(() => emoji.remove(), 3000);
+        }, i * 50);
+    }
+    
+    // Create confetti
+    for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + '%';
+            confetti.style.top = '-10px';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.animationDelay = Math.random() * 0.5 + 's';
+            document.body.appendChild(confetti);
+            
+            setTimeout(() => confetti.remove(), 3000);
+        }, i * 30);
+    }
+}
+
+// Shake animation for errors
+function shakeElement(elementId) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.style.animation = 'shake 0.5s ease-in-out';
+        setTimeout(() => {
+            element.style.animation = '';
+        }, 500);
+    }
+}
+
+// Add shake animation to CSS dynamically if not present
+if (!document.querySelector('style[data-shake]')) {
+    const style = document.createElement('style');
+    style.setAttribute('data-shake', 'true');
+    style.textContent = `
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px); }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
 function calculateWinner() {
-    const name1 = document.getElementById('name1').value.trim().toLowerCase();;
-    const name2 = document.getElementById('name2').value.trim().toLowerCase();;
+    const name1Input = document.getElementById('name1');
+    const name2Input = document.getElementById('name2');
+    const name1 = name1Input.value.trim().toLowerCase();
+    const name2 = name2Input.value.trim().toLowerCase();
     const side1a = parseFloat(document.getElementById('side1a').value);
     const side1b = parseFloat(document.getElementById('side1b').value);
     const side2a = parseFloat(document.getElementById('side2a').value);
     const side2b = parseFloat(document.getElementById('side2b').value);
     
-    // Validation
+    // Validation with shake animations
     if (!name1 || !name2) {
+        if (!name1) shakeElement('name1');
+        if (!name2) shakeElement('name2');
         alert('Please enter both player names!');
         return;
     }
     
     if (isNaN(side1a) || isNaN(side1b) || isNaN(side2a) || isNaN(side2b)) {
+        if (isNaN(side1a)) shakeElement('side1a');
+        if (isNaN(side1b)) shakeElement('side1b');
+        if (isNaN(side2a)) shakeElement('side2a');
+        if (isNaN(side2b)) shakeElement('side2b');
         alert('Please enter all weights!');
         return;
     }
@@ -38,12 +106,12 @@ function calculateWinner() {
     document.getElementById('result1name').textContent = name1;
     document.getElementById('result1diff').textContent = percentDiff1.toFixed(2) + '%';
     document.getElementById('result1details').innerHTML = 
-        `<span class="digit">${side1a}g</span> + <span class="digit">${side1b}g</span> = <span class="digit">${total1}g</span> (<span class="digit">${diff1.toFixed(1)}g</span> difference)`;
+        `${side1a}g + ${side1b}g = ${total1}g (${diff1.toFixed(1)}g difference)`;
     
     document.getElementById('result2name').textContent = name2;
     document.getElementById('result2diff').textContent = percentDiff2.toFixed(2) + '%';
     document.getElementById('result2details').innerHTML = 
-        `<span class="digit">${side2a}g</span> + <span class="digit">${side2b}g</span> = <span class="digit">${total2}g</span> (<span class="digit">${diff2.toFixed(1)}g</span> difference)`;
+        `${side2a}g + ${side2b}g = ${total2}g (${diff2.toFixed(1)}g difference)`;
     
     // Determine winner
     let winner, loser;
@@ -52,16 +120,16 @@ function calculateWinner() {
     if (percentDiff1 < percentDiff2) {
         winner = name1;
         loser = name2;
-        winnerDiv.textContent = `🏆 ${name1.toUpperCase()} WINS!`;
+        winnerDiv.textContent = `🏆 ${name1.toUpperCase()} WINS! 🏆`;
     } else if (percentDiff2 < percentDiff1) {
         winner = name2;
         loser = name1;
-        winnerDiv.textContent = `🏆 ${name2.toUpperCase()} WINS!`;
+        winnerDiv.textContent = `🏆 ${name2.toUpperCase()} WINS! 🏆`;
     } else {
-        winnerDiv.textContent = `🤝 IT'S A TIE!`;
-        // For ties, don't update leaderboard
+        winnerDiv.textContent = `🤝 IT'S A TIE! 🤝`;
+        // For ties, show results but don't update leaderboard
         document.getElementById('mainPage').style.display = 'none';
-        document.getElementById('results').classList.add('show');
+        document.getElementById('resultsPage').style.display = 'flex';
         return;
     }
     
@@ -73,7 +141,19 @@ function calculateWinner() {
     
     // Show results page
     document.getElementById('mainPage').style.display = 'none';
-    document.getElementById('results').classList.add('show');
+    document.getElementById('resultsPage').style.display = 'flex';
+    
+    // Add pulse animation to winner after page is shown
+    setTimeout(() => {
+        if (winnerDiv) {
+            winnerDiv.classList.add('pulse');
+        }
+    }, 100);
+    
+    // Trigger celebration after a short delay
+    setTimeout(() => {
+        createEmojiCelebration(winner);
+    }, 500);
 }
 
 function updateLeaderboard(winner, loser, scores) {
@@ -104,29 +184,45 @@ function updateLeaderboard(winner, loser, scores) {
 }
 
 function nextMatch() {
-    // Clear inputs
-    document.getElementById('name1').value = '';
-    document.getElementById('name2').value = '';
-    document.getElementById('side1a').value = '';
-    document.getElementById('side1b').value = '';
-    document.getElementById('side2a').value = '';
-    document.getElementById('side2b').value = '';
+    // Clear inputs with fade animation
+    const inputs = ['name1', 'name2', 'side1a', 'side1b', 'side2a', 'side2b'];
+    inputs.forEach(id => {
+        const input = document.getElementById(id);
+        if (input) {
+            input.style.transition = 'opacity 0.3s';
+            input.style.opacity = '0';
+            setTimeout(() => {
+                input.value = '';
+                input.style.opacity = '1';
+            }, 300);
+        }
+    });
+    
+    // Remove pulse from winner
+    const winnerDiv = document.getElementById('winner');
+    if (winnerDiv) {
+        winnerDiv.classList.remove('pulse');
+    }
     
     // Go back to main page
-    document.getElementById('results').classList.remove('show');
-    document.getElementById('mainPage').style.display = 'block';
+    setTimeout(() => {
+        document.getElementById('resultsPage').style.display = 'none';
+        document.getElementById('mainPage').style.display = 'flex';
+    }, 300);
 }
 
 function showLeaderboard() {
     // Hide other pages
     document.getElementById('mainPage').style.display = 'none';
-    document.getElementById('results').classList.remove('show');
+    document.getElementById('resultsPage').style.display = 'none';
     
     // Display leaderboard
     const container = document.getElementById('leaderboardContainer');
     
+    if (!container) return;
+    
     if (Object.keys(leaderboard).length === 0) {
-        container.innerHTML = '<div class="no-data">No matches recorded yet</div>';
+        container.innerHTML = '<div class="no-data">No matches recorded yet 🎯</div>';
     } else {
         // Sort players by: 1) wins (descending), 2) best score (ascending - lower is better)
         const sortedPlayers = Object.entries(leaderboard).sort((a, b) => {
@@ -145,7 +241,7 @@ function showLeaderboard() {
             const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '';
             
             html += `
-                <div class="leaderboard-item ${topClass}">
+                <div class="leaderboard-item ${topClass}" style="animation-delay: ${index * 0.1}s">
                     ${medal ? `<span class="medal">${medal}</span>` : ''}
                     <div class="leaderboard-rank">#${rank}</div>
                     <div class="leaderboard-info">
@@ -165,26 +261,71 @@ function showLeaderboard() {
         container.innerHTML = html;
     }
     
-    // Show leaderboard page
-    document.getElementById('leaderboardPage').classList.add('show');
+    // Show leaderboard page with animation
+    document.getElementById('leaderboardPage').style.display = 'flex';
 }
 
 function backToCompetition() {
-    document.getElementById('leaderboardPage').classList.remove('show');
+
+    document.getElementById('name1').value = '';
+    document.getElementById('name2').value = '';
+    document.getElementById('side1a').value = '';
+    document.getElementById('side1b').value = '';
+    document.getElementById('side2a').value = '';
+    document.getElementById('side2b').value = '';
+
+    // Add exit animation
+    const leaderboardPage = document.getElementById('leaderboardPage');
     
-    // Decide which page to show
-    if (document.getElementById('results').classList.contains('show')) {
-        document.getElementById('results').classList.add('show');
-    } else {
-        document.getElementById('mainPage').style.display = 'block';
-    }
+    if (!leaderboardPage) return;
+    
+    leaderboardPage.style.animation = 'slideOutLeft 0.5s ease-out';
+    
+    setTimeout(() => {
+        leaderboardPage.style.display = 'none';
+        leaderboardPage.style.animation = '';
+        
+        // Decide which page to show
+        const resultsPage = document.getElementById('resultsPage');
+        
+        if (resultsPage && resultsPage.style.display === 'flex') {
+            resultsPage.style.display = 'flex';
+        } else {
+            document.getElementById('mainPage').style.display = 'flex';
+        }
+    }, 500);
 }
 
 function resetLeaderboard() {
-    if (confirm('Are you sure you want to reset the leaderboard? This cannot be undone!')) {
-        leaderboard = {};
-        localStorage.removeItem('only1cut_leaderboard');
-        showLeaderboard(); // Refresh the display
-        alert('Leaderboard has been reset!');
+    if (confirm('Are you sure you want to reset the leaderboard? This cannot be undone! 🗑️')) {
+        // Animate out all leaderboard items
+        const items = document.querySelectorAll('.leaderboard-item');
+        items.forEach((item, index) => {
+            setTimeout(() => {
+                item.style.animation = 'slideOutLeft 0.5s ease-out';
+                item.style.opacity = '0';
+            }, index * 50);
+        });
+        
+        setTimeout(() => {
+            leaderboard = {};
+            localStorage.removeItem('only1cut_leaderboard');
+            showLeaderboard();
+            
+            // Show success emojis
+            const successEmojis = ['✅', '🗑️', '✨', '💫'];
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const emoji = document.createElement('div');
+                    emoji.className = 'emoji-celebration';
+                    emoji.textContent = successEmojis[Math.floor(Math.random() * successEmojis.length)];
+                    emoji.style.left = Math.random() * 100 + '%';
+                    emoji.style.top = '50%';
+                    document.body.appendChild(emoji);
+                    
+                    setTimeout(() => emoji.remove(), 3000);
+                }, i * 100);
+            }
+        }, items.length * 50 + 500);
     }
 }
