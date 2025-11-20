@@ -14,6 +14,7 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px;
+    overflow: hidden;
 }
 
 .container {
@@ -25,9 +26,46 @@ body {
     width: 100%;
     min-height: 90vh;
     max-height: 95vh;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.page {
     display: flex;
     flex-direction: column;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    height: 100%;
+}
+
+/* Page transitions */
+.page-enter {
+    animation: slideInRight 0.5s ease-out;
+}
+
+.page-exit {
+    animation: slideOutLeft 0.5s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutLeft {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
 }
 
 h1 {
@@ -37,16 +75,51 @@ h1 {
     font-size: 3.5vw;
     font-weight: 800;
     letter-spacing: 1px;
+    animation: bounceIn 0.8s ease-out;
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .competitor {
     margin-bottom: 12px;
     padding-bottom: 12px;
     border-bottom: 2px solid #e0e7ff;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.competitor:first-of-type {
+    animation-delay: 0.1s;
 }
 
 .competitor:last-of-type {
     border-bottom: none;
+    animation-delay: 0.2s;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 h2 {
@@ -71,6 +144,7 @@ input:focus {
     outline: none;
     border-color: #20d4ae;
     box-shadow: 0 0 0 4px rgba(32, 212, 174, 0.1);
+    transform: scale(1.02);
 }
 
 input[type="text"] {
@@ -99,6 +173,7 @@ input[type="number"] {
     display: flex;
     gap: 12px;
     margin-top: auto;
+    animation: fadeInUp 0.6s ease-out 0.3s both;
 }
 
 button {
@@ -113,6 +188,26 @@ button {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(32, 212, 174, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+button:active::before {
+    width: 300px;
+    height: 300px;
 }
 
 button:hover {
@@ -122,7 +217,7 @@ button:hover {
 }
 
 button:active {
-    transform: translateY(0);
+    transform: translateY(0) scale(0.98);
 }
 
 .secondary-btn {
@@ -146,13 +241,14 @@ button:active {
 }
 
 .results {
-    display: none;
     flex-direction: column;
     height: 100%;
 }
 
-.results.show {
+.results-content {
+    flex: 1;
     display: flex;
+    flex-direction: column;
 }
 
 .result-item {
@@ -161,6 +257,26 @@ button:active {
     border-radius: 12px;
     margin-bottom: 1vh;
     border: 2px solid #c7d2fe;
+    animation: slideInScale 0.5s ease-out;
+}
+
+.result-item:first-of-type {
+    animation-delay: 0.1s;
+}
+
+.result-item:last-of-type {
+    animation-delay: 0.2s;
+}
+
+@keyframes slideInScale {
+    from {
+        opacity: 0;
+        transform: translateX(-50px) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
 }
 
 .result-item h3 {
@@ -177,6 +293,21 @@ button:active {
     font-weight: 800;
     color: #000;
     letter-spacing: 1px;
+    animation: numberPop 0.6s ease-out;
+}
+
+@keyframes numberPop {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .result-item p {
@@ -203,18 +334,102 @@ button:active {
     font-size: 3vw;
     font-weight: 800;
     box-shadow: 0 8px 25px rgba(32, 212, 174, 0.5);
+    animation: winnerAnnounce 1s ease-out;
+    position: relative;
 }
 
-/* Leaderboard Styles */
+@keyframes winnerAnnounce {
+    0% {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.15) rotate(10deg);
+    }
+    70% {
+        transform: scale(0.95) rotate(-5deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.winner.pulse {
+    animation: winnerPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes winnerPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 8px 25px rgba(32, 212, 174, 0.5);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 12px 35px rgba(32, 212, 174, 0.8);
+    }
+}
+
+/* Emoji celebration animation */
+.emoji-celebration {
+    position: fixed;
+    font-size: 3vw;
+    pointer-events: none;
+    z-index: 9999;
+    animation: emojiFloat 3s ease-out forwards;
+}
+
+@keyframes emojiFloat {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(0);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-30vh) rotate(180deg) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) rotate(360deg) scale(0.5);
+        opacity: 0;
+    }
+}
+
+/* Confetti animation */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    pointer-events: none;
+    z-index: 9999;
+    animation: confettiFall 3s ease-out forwards;
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translateY(0) rotateZ(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotateZ(720deg);
+        opacity: 0;
+    }
+}
+
+/* Ensure leaderboard scrolls and bottom buttons remain visible */
 .leaderboard-page {
-    display: none;
+    display: flex;
     flex-direction: column;
     height: 100%;
+    min-height: 0; /* IMPORTANT */
 }
 
-.leaderboard-page.show {
-    display: flex;
+.leaderboard-container {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0; /* IMPORTANT – enables scrolling */
+    max-height: 70vh; /* makes the white box smaller */
 }
+
 
 .leaderboard-container {
     flex: 1;
@@ -231,6 +446,16 @@ button:active {
     font-size: 2vw;
     font-weight: 500;
     margin: auto;
+    animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .leaderboard-item {
@@ -243,6 +468,19 @@ button:active {
     justify-content: space-between;
     align-items: center;
     flex-shrink: 0;
+    animation: slideInRight 0.5s ease-out;
+    transition: all 0.3s ease;
+}
+
+.leaderboard-item:nth-child(1) { animation-delay: 0.1s; }
+.leaderboard-item:nth-child(2) { animation-delay: 0.15s; }
+.leaderboard-item:nth-child(3) { animation-delay: 0.2s; }
+.leaderboard-item:nth-child(4) { animation-delay: 0.25s; }
+.leaderboard-item:nth-child(5) { animation-delay: 0.3s; }
+
+.leaderboard-item:hover {
+    transform: translateX(10px) scale(1.02);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
 .leaderboard-rank {
@@ -263,6 +501,7 @@ button:active {
     color: #000;
     margin-bottom: 0.3vh;
     line-height: 1.2;
+    text-transform: capitalize;
 }
 
 .leaderboard-stats {
@@ -293,6 +532,7 @@ button:active {
 
 .top-3 {
     position: relative;
+    animation: crownShine 2s ease-in-out infinite;
 }
 
 .top-3.rank-1 {
@@ -310,11 +550,33 @@ button:active {
     border-color: #cd7f32;
 }
 
+@keyframes crownShine {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    }
+}
+
 .medal {
     position: absolute;
     top: -6px;
     left: -6px;
     font-size: 2.5vw;
+    animation: medalSpin 3s ease-in-out infinite;
+}
+
+@keyframes medalSpin {
+    0%, 100% {
+        transform: rotate(0deg) scale(1);
+    }
+    25% {
+        transform: rotate(-15deg) scale(1.1);
+    }
+    75% {
+        transform: rotate(15deg) scale(1.1);
+    }
 }
 
 /* Scrollbar Styles */
