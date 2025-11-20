@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <!-- Main Competition Page -->
-        <div id="mainPage">
+        <div id="mainPage" class="page">
             <h1>ONLY1CUT</h1>
             
             <div class="competitor">
@@ -37,22 +37,24 @@
         </div>
         
         <!-- Results Page -->
-        <div class="results" id="results">
+        <div id="resultsPage" class="page results" style="display: none;">
             <h1>Match Results</h1>
             
-            <div class="result-item">
-                <h3 id="result1name"></h3>
-                <div class="percentage" id="result1diff"></div>
-                <p id="result1details"></p>
+            <div class="results-content">
+                <div class="result-item">
+                    <h3 id="result1name"></h3>
+                    <div class="percentage" id="result1diff"></div>
+                    <p id="result1details"></p>
+                </div>
+                
+                <div class="result-item">
+                    <h3 id="result2name"></h3>
+                    <div class="percentage" id="result2diff"></div>
+                    <p id="result2details"></p>
+                </div>
+                
+                <div class="winner" id="winner"></div>
             </div>
-            
-            <div class="result-item">
-                <h3 id="result2name"></h3>
-                <div class="percentage" id="result2diff"></div>
-                <p id="result2details"></p>
-            </div>
-            
-            <div class="winner" id="winner"></div>
             
             <div class="button-group">
                 <button onclick="nextMatch()">New Competition</button>
@@ -61,7 +63,7 @@
         </div>
         
         <!-- Leaderboard Page -->
-        <div class="leaderboard-page" id="leaderboardPage">
+        <div id="leaderboardPage" class="page leaderboard-page" style="display: none;">
             <h1>Leaderboard</h1>
             
             <div class="leaderboard-container" id="leaderboardContainer">
